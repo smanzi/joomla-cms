@@ -282,7 +282,14 @@ class MenusHelper
 				->select('m2.language, m2.id');
 			$db->setQuery($query);
 
-			$menuitems = $db->loadObjectList('language');
+			try
+			{
+				$menuitems = $db->loadObjectList('language');
+			}
+			catch (RuntimeException $e)
+			{
+				throw new Exception($e->getMessage(), 500);
+			}
 
 			foreach ($menuitems as $tag => $item)
 			{
